@@ -20,18 +20,16 @@ num = '73167176531330624919225119674426574742355349194934\
 05886116467109405077541002256983155200055935729725\
 71636269561882670428252483600823257530420752963450'
 start = time.time()
-gp = -1
-gp_digits = []
+greatest_product = -1
 for x in range(len(num)):
     digits = num[x: x + 13]
-    p = 1
+    current_product = 1
     for d in digits:
-        p *= int(d)
-    if p > gp:
-        gp = p
-        gp_digits = digits
+        current_product *= int(d)
+    if current_product > greatest_product:
+        greatest_product = current_product
 
-print(gp)  # answer
+print(greatest_product)  # answer
 
 print(time.time() - start)
 
