@@ -1,9 +1,19 @@
+import time
 number = 1000
 
-for a in range(1, number + 1):
-    for b in range(a + 1, number + 1 - a):
 
-        c = number - a - b
+def find_triplet(target_number):
+    for a in range(1, target_number + 1):
+        for b in range(a + 1, target_number + 1 - a):
 
-        if ((a**2) + (b**2)) == (c**2):
-            print(a * b * c)
+            c = target_number - a - b
+
+            if ((a**2) + (b**2)) == (c**2):
+                return a * b * c
+
+
+start = time.time()
+
+print(find_triplet(number))
+
+print(time.time() - start)
