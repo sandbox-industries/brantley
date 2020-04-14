@@ -9,7 +9,7 @@ for a in range(1, number + 1):
 
         c = number - a - b
 
-        if ((a * a) + (b * b)) == (c * c):
+        if ((a**2) + (b**2)) == (c**2):
             print(a * b * c)
 
 print(time.time() - start)
