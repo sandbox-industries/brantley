@@ -11,8 +11,11 @@ num = re.findall('\d{1000}', resp)[0]
 
 start = time.time()
 greatest_product = -1
+
 for x in range(len(num)):
     digits = num[x: x + 13]
+    if '0' in digits:
+        continue
     current_product = 1
     for d in digits:
         current_product *= int(d)
