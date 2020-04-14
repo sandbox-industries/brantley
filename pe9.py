@@ -3,6 +3,7 @@ number = 1000
 
 
 def find_triplet(target_number):
+    
     for a in range(1, target_number + 1):
         for b in range(a + 1, target_number + 1 - a):
 
