@@ -1,22 +1,13 @@
 from time import time
 
 
-def fill_in(rows):
-    row_idx, col_idx = zero(rows)
+def zero(puzzle):
+    for row_idx, elm in enumerate(puzzle):
+        for col_idx, dig in enumerate(elm):
+            if dig == '0':
+                return row_idx, col_idx
 
-    if row_idx == -1:
-        return True
-
-    for x in range(1, 10):
-        if check(row_idx, col_idx, rows, str(x)):
-            rows[row_idx][col_idx] = str(x)
-
-            if fill_in(rows):
-                return True
-
-            rows[row_idx][col_idx] = '0'
-
-    return False
+    return -1, -1
 
 
 def check(row_idx, col_idx, rows, num):
@@ -34,13 +25,22 @@ def check(row_idx, col_idx, rows, num):
     return True
 
 
-def zero(puzzle):
-    for row_idx, elm in enumerate(puzzle):
-        for col_idx, dig in enumerate(elm):
-            if dig == '0':
-                return row_idx, col_idx
+def fill_in(rows):
+    row_idx, col_idx = zero(rows)
 
-    return -1, -1
+    if row_idx == -1:
+        return True
+
+    for x in range(1, 10):
+        if check(row_idx, col_idx, rows, str(x)):
+            rows[row_idx][col_idx] = str(x)
+
+            if fill_in(rows):
+                return True
+
+            rows[row_idx][col_idx] = '0'
+
+    return False
 
 
 with open('p096.txt', 'r') as file:
