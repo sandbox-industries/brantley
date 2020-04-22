@@ -3,7 +3,6 @@ number = 1000
 
 
 def find_triplet(target_number):
-    
     for a in range(1, target_number + 1):
         for b in range(a + 1, target_number + 1 - a):
 
@@ -13,8 +12,15 @@ def find_triplet(target_number):
                 return a * b * c
 
 
-start = time.time()
+for x in range(1,10):
+    print('\rOn', x, end='')
 
-print(find_triplet(number))
 
-print(time.time() - start)
+    time.sleep(1)
+
+
+# start = time.time()
+#
+# print(find_triplet(number))
+#
+# print(time.time() - start)
