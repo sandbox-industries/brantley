@@ -39,25 +39,16 @@ for line_number in range(len(triangle_data)):
 
     for idx, dig in enumerate(triangle_data[line_number]):
 
-        # Top of the data. Node has no parents
-        if line_number == 0:
-            right_parent = None
-            left_parent = None
+        right_parent = None
+        left_parent = None
 
-        # Node will have no left parent being the first in the list
-        elif idx == 0:
-            right_parent = triangle_data[line_number - 1][idx]
-            left_parent = None
-
-        # Node will have no right parent being last in the list
-        elif idx == len(triangle_data[line_number]) - 1:
+        # Node not first in the list. Can have left parent
+        if idx != 0:
             left_parent = triangle_data[line_number - 1][idx - 1]
-            right_parent = None
 
-        # Node has both parents
-        else:
+        # Node not last in the list. Can have right parent
+        if idx != len(triangle_data[line_number]) - 1:
             right_parent = triangle_data[line_number - 1][idx]
-            left_parent = triangle_data[line_number - 1][idx - 1]
 
         # Creating node object and inserting it in the data.
         triangle_data[line_number][idx] = Node(dig, left_parent, right_parent)
