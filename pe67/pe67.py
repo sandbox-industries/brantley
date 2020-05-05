@@ -14,14 +14,12 @@ class Node:
 
 def find_answer(prev_node, curr_node):
     # Passes when the curr_node is the first node
-    if prev_node is None:
-        pass
+    if prev_node is not None:
+        if curr_node.path_to_sum < curr_node.value + prev_node.path_to_sum:
+            curr_node.path_to_sum = curr_node.value + prev_node.path_to_sum
 
-    elif curr_node.path_to_sum < curr_node.value + prev_node.path_to_sum:
-        curr_node.path_to_sum = curr_node.value + prev_node.path_to_sum
-
-    else:
-        return
+        else:
+            return
 
     if curr_node.right_parent:
         find_answer(curr_node, curr_node.right_parent)
@@ -56,6 +54,7 @@ for line_number in range(len(triangle_data)):
 
 # Loop through the last line in triangle data and run the find_answer recursive function on each node
 for n in triangle_data[-1]:
+    print(n)
     find_answer(None, n)
 
 print(time.time() - start)
