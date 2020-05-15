@@ -1,9 +1,8 @@
 import time
 
 with open('p059_cipher.txt', 'r') as file:
-    f = file.read()
-    f = f.split(',')
-    f = list(map(int, f))
+    hidden_message = list(map(int, file.read().split(',')))
+
 
 common_eng_words = ['the', 'of', 'and', 'a', 'to', 'at', 'be', 'this', 'have', 'from']
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -12,7 +11,7 @@ alphabet = 'abcdefghijklmnopqrstuvwxyz'
 def decrypt_message(key, encrypted_message):
     decrypted_message = []
     for idx in range(0, len(encrypted_message) - 1, 3):
-        
+
         key_applied = [(encrypted_message[idx] ^ ord(key[0])),
                        (encrypted_message[idx + 1] ^ ord(key[1])),
                        (encrypted_message[idx + 2] ^ ord(key[2]))]
@@ -47,13 +46,14 @@ start = time.time()
 
 max_message = ''
 max_num_words = 0
+correct_key = ''
 
 for a1 in alphabet:
     for a2 in alphabet:
         for a3 in alphabet:
             curr_key = [a1, a2, a3]
 
-            valid_message = decrypt_message(curr_key, f)
+            valid_message = decrypt_message(curr_key, hidden_message)
 
             if valid_message:
                 num_words = 0
@@ -65,11 +65,14 @@ for a1 in alphabet:
                 if num_words > max_num_words:
                     max_message = valid_message
                     max_num_words = num_words
+                    correct_key = curr_key
 
-#answer
-print(sum(list(map(ord, max_message))))
+# answer
+print('Key Used: ' + '-'.join(correct_key))
+print('Answer:', sum(list(map(ord, max_message))))
+print('Run Time:', time.time() - start)
 
-print(time.time() - start)
+
 
 
 
