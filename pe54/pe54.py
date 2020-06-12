@@ -35,6 +35,10 @@ class Hand:
             if count > 1:
                 hand_value += value
 
+        # Three of a kind and a pair (Full House)
+        if count_unique.count(3) == 1 and count_unique.count(2) == 1:
+            return 600 + hand_value
+
         # One Pair
         if count_unique.count(2) == 1:
             return 100 + hand_value
@@ -46,10 +50,6 @@ class Hand:
         # Three of a kind
         if count_unique.count(3) == 1:
             return 300 + hand_value
-
-        # Three of a kind and a pair (Full House)
-        if count_unique.count(3) == 1 and count_unique.count(2) == 1:
-            return 600 + hand_value
 
         # Four of a kind
         if count_unique.count(4) == 1:
@@ -79,8 +79,8 @@ class Hand:
         return 0
 
     def royal_flush(self):
-        values = [int(x.strip('SHDC')) for x in self.hand]
-        if values == list(range(10, 15)) and self.same_suit:
+
+        if self.values == list(range(10, 15)) and self.same_suit:
             return 900
 
         return 0
@@ -103,13 +103,15 @@ def decide_winner(p1, p2):
 
 
 win_count = {'player1': 0, 'player2': 0}
-
+import time
+start = time.time()
 for line in hands:
     player1 = Hand(line.split()[:5])
     player2 = Hand(line.split()[5:])
     win_count[decide_winner(player1, player2)] += 1
 
 print(win_count)
+print(time.time() - start)
 
 
 
