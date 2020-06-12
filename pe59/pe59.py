@@ -4,7 +4,7 @@ with open('p059_cipher.txt', 'r') as file:
     hidden_message = list(map(int, file.read().split(',')))
 
 
-common_eng_words = ['the', 'of', 'and', 'a', 'to', 'at', 'be', 'this', 'have', 'from']
+common_eng_words = ['the', 'of', 'and', 'to', 'at', 'be', 'this', 'have', 'from']
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 
@@ -25,7 +25,7 @@ def decrypt_message(key, encrypted_message):
 
 
 def is_valid(ascii_code):
-    if ascii_code < 126:
+    if 31 < ascii_code < 126:
         return True
     else:
         return False
@@ -57,10 +57,10 @@ for a1 in alphabet:
 
             if valid_message:
                 num_words = 0
-                message = ''.join(valid_message)
+                valid_message = ''.join(valid_message)
 
                 for common_word in common_eng_words:
-                    num_words += word_count(common_word, message)
+                    num_words += word_count(common_word, valid_message)
 
                 if num_words > max_num_words:
                     max_message = valid_message
@@ -71,6 +71,7 @@ for a1 in alphabet:
 print('Key Used: ' + '-'.join(correct_key))
 print('Answer:', sum(list(map(ord, max_message))))
 print('Run Time:', time.time() - start)
+
 
 
 
