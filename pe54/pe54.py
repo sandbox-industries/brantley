@@ -5,30 +5,25 @@ with open('p054_poker.txt', 'r') as file:
 class Hand:
     def __init__(self, input_hand):
 
+        # Changing the letter card values to numbers for easy sorting
         self.hand = [card.replace('T', '10').replace('J', '11').replace('Q', '12')
                          .replace('K', '13').replace('A', '14') for card in input_hand]
+
+        # Sorting using the card value as the key
         self.hand.sort(key=lambda x: int(x[:-1]))
 
+        # Pulling out the values of each card to be used later
         self.values = [int(x[:-1]) for x in self.hand]
 
-        self.consecutive = self.is_consecutive()
+        # Checking if the values are consecutive
+        self.consecutive = self.values == list(range(min(self.values), max(self.values) + 1))
 
-        self.same_suit = self.is_same_suit()
+        # Checking if the cards all the same suit
+        self.same_suit = len(set([card[-1] for card in self.hand])) < 1
 
     def find_hand_rank(self):
         return max(self.high_card(), self.how_many_of_a_kind(), self.straight(), self.flush(), self.straight_flush(),
                    self.royal_flush())
-
-    def is_consecutive(self):
-        return self.values == list(range(min(self.values), max(self.values) + 1))
-
-    def is_same_suit(self):
-        suits = [card[-1] for card in self.hand]
-
-        if len(set(suits)) > 1:
-            return False
-
-        return True
 
     def how_many_of_a_kind(self):
         hand_value = 0
@@ -39,19 +34,24 @@ class Hand:
             count_unique.append(count)
             if count > 1:
                 hand_value += value
-                
+
+        # One Pair
         if count_unique.count(2) == 1:
             return 100 + hand_value
 
+        # Two Pair
         if count_unique.count(2) == 2:
             return 200 + hand_value
 
+        # Three of a kind
         if count_unique.count(3) == 1:
             return 300 + hand_value
 
+        # Three of a kind and a pair (Full House)
         if count_unique.count(3) == 1 and count_unique.count(2) == 1:
             return 600 + hand_value
 
+        # Four of a kind
         if count_unique.count(4) == 1:
             return 700 + hand_value
 
@@ -92,22 +92,9 @@ def decide_winner(p1, p2):
     greater_value = max(p1_value, p2_value)
 
     if p1_value == p2_value:
-        found_higher = False
-        idx = 4
-        while not found_higher:
-            p1_value = p1.values[idx]
-            p2_value = p2.values[idx]
-            if p1_value != p2_value:
-                greater_value = max(p1_value, p2_value)
-                found_higher = True
-            else:
-                idx -= 1
+        greater_value = max(set(p1.values).symmetric_difference(set(p2.values)))
 
-            if idx < 0:
-                print('something is WRONG')
-                break
-
-    if p1_value == greater_value:
+    if p1_value == greater_value or greater_value in p1.values:
         winner = 'player1'
     else:
         winner = 'player2'
