@@ -1,1 +1,0 @@
-print(sum((sum((num - 64) * (idx + 1) for num in list(map(ord, x)))) for idx, x in enumerate(sorted(open('p022_names.txt', 'r').read().replace('"', '').split(',')))))
